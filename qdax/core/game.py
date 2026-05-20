@@ -1229,6 +1229,7 @@ class GAME:
         self, diversity_type, mtmb_me, gen_id
     ):
         assert diversity_type in [
+            "behavior",
             "fitness_quality",
             "ranking_quality",
             "fitness_diversity",
