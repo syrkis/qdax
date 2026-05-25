@@ -78,8 +78,6 @@ def intra_batch_comp(
     not_existent = jnp.where((jnp.isnan(normed)).any(), True, False)
 
     # Fill in Nans to do computations
-    print(normed.shape)
-    exit()
     normed = jnp.where(jnp.isnan(normed), jnp.full(normed.shape[-1], jnp.inf), normed)
     eval_scores = jnp.where(
         jnp.isinf(eval_scores), jnp.full(eval_scores.shape[-1], jnp.nan), eval_scores
