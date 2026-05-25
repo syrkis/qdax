@@ -78,6 +78,8 @@ def intra_batch_comp(
     not_existent = jnp.where((jnp.isnan(normed)).any(), True, False)
 
     # Fill in Nans to do computations
+    print(normed.shape)
+    exit()
     normed = jnp.where(jnp.isnan(normed), jnp.full(normed.shape[-1], jnp.inf), normed)
     eval_scores = jnp.where(
         jnp.isinf(eval_scores), jnp.full(eval_scores.shape[-1], jnp.nan), eval_scores
@@ -402,11 +404,13 @@ class UnstructuredRepertoire(GARepertoire):
         # Initialize grid with default values
         default_fitnesses = -jnp.inf * jnp.ones(shape=(max_size, 1))
         default_genotypes = jax.tree.map(
-            lambda x: jnp.full(shape=(max_size,) + x.shape[1:], fill_value=jnp.nan),
+            lambda x: jnp.zeros(
+                shape=(max_size,) + x.shape[1:],
+                dtype=x.dtype,
+            ),
             genotypes,
         )
         default_descriptors = jnp.zeros(shape=(max_size, descriptors.shape[-1]))
-
         # create default extra scores
         filtered_extra_scores = {
             key: value
